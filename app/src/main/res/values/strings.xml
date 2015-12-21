@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Minesweeper</string>
+    <string name="new_game">New Game</string>
+    <string name="verify_result">Verify</string>
+    <string name="cheat">Cheat</string>
+    <string name="difficulty_level_size">Difficulty level by size</string>
+    <string name="difficulty_level_number">Difficulty level by Mine number</string>
+    <string name="mine_number_too_big">Mines number is too big!</string>
+    <string name="game_success">Congratulations! You swept all the mines!</string>
+    <string name="game_reveal_fail">Oh sorry, validate fails!</string>
+    <string name="game_fail">Oh sorry, you failed the game!</string>
+    <string name="mark_more">Please mark all mines around!</string>
+    <string-array name="difficulty_level_size">
+        <item>8</item>
+        <item>16</item>
+        <item>24</item>
+    </string-array>
+    <string-array name="difficulty_level_mine">
+        <item>10</item>
+        <item>40</item>
+        <item>90</item>
+    </string-array>
+</resources>
