@@ -32,7 +32,11 @@ public class MarkedState implements GridState{
 
     @Override
     public void markMine() {
-        mGrid.currentState = mGrid.unRevealState;
+        if (mHasMine){
+            mGrid.currentState = mGrid.mineState;
+        }else {
+            mGrid.currentState = mGrid.unRevealState;
+        }
         mGrid.setBackgroundResource(R.drawable.grey_grid);
     }
 

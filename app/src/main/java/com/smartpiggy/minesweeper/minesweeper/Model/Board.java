@@ -1,7 +1,15 @@
 package com.smartpiggy.minesweeper.minesweeper.Model;
 
+import android.util.Log;
+
+import com.smartpiggy.minesweeper.minesweeper.R;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by eyang on 12/19/15.
@@ -64,10 +72,51 @@ public class Board {
         for (int[] diff : mAroundDiffs){
             int row = x+diff[0];
             int col = y+diff[1];
-            if (row>=0 && row<mSize && col>=0 && col<mSize)
+            if (row>=0 && row<mSize && col>=0 && col<mSize) {
                 list.add(mGrids[row][col]);
+            }
         }
         return list;
+    }
+
+    //using BFS(Breadth-first search) to reveal the grids one by one
+    public void revealAround(int row, int col){
+        //make sure a grid is revealed more than once
+        //Set store Integer corresponding to row*mSize+col
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<Integer>();
+
+        for (Grid grid : getAroundGrids(row, col)){
+            int index = grid.mRow*mSize + grid.mCol;
+            queue.add(index);
+            visited.add(index);
+        }
+        while (!queue.isEmpty()){
+            int index = queue.poll();
+            int x = index/mSize, y = index%mSize;
+            Grid grid = mGrids[x][y];//get grid based on index
+            if (grid.currentState==grid.unRevealState){
+                if (grid.mNum>0) {
+                    grid.reveal();//reveal the number of the grid
+                } else{ //mNum equals 0, put the around grids' index to queue
+                    grid.currentState = grid.revealedState;//change grid status
+                    grid.setBackgroundResource(R.drawable.white_grid);//change grid color to white
+                    for (Grid tmpGrid : getAroundGrids(x, y)){
+                        int tmpIndex = tmpGrid.mRow*mSize + tmpGrid.mCol;
+                        if (visited.contains(tmpIndex)) {//remove duplicate grids
+                            continue;
+                        }
+                        queue.add(tmpIndex);//put around grids to queue
+                        visited.add(tmpIndex);
+                    }
+                }
+            }else if (grid.currentState==grid.mineState){
+                visited.clear();
+                queue.clear();
+                grid.reveal();//reveal a mine, game end
+                return;
+            }
+        }
     }
 
     public void setGrid(int row, int col, Grid grid){
@@ -94,12 +143,6 @@ public class Board {
             for (int j=0; j<mSize; j++){
                 mGrids[i][j].cheat();
             }
-        }
-    }
-
-    public void revealAround(int row, int col){
-        for (Grid grid : getAroundGrids(row, col)){
-            grid.reveal();
         }
     }
 }

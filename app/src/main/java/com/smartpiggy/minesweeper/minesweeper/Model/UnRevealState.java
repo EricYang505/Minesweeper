@@ -37,7 +37,7 @@ public class UnRevealState implements GridState{
 
     @Override
     public void markMine() {
-        mGrid.markedState.setHasMine(false);
+        mGrid.markedState.setHasMine(false); //set markedState do not have mine
         mGrid.currentState = mGrid.markedState;
         mGrid.setBackground(Utils.getDrawable(mGrid.getContext(), R.mipmap.flag));
     }

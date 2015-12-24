@@ -38,11 +38,12 @@ public class Grid extends TextView {
     }
 
     public boolean getIsRevealed(){
-        if (currentState==revealedState || currentState==mineState) //revealedState and mineState are both as revealed
+        if (currentState==revealedState) //revealedState are both as revealed
             return true;
         return false;
     }
 
+    //determine if the grid has mine
     public boolean getIsMine(){
         if (currentState == mineState || (currentState == markedState && markedState.isHasMine())) {
             return true;
@@ -62,6 +63,7 @@ public class Grid extends TextView {
         currentState.markMine();
     }
 
+    //show all the mines without end the game
     public void cheat() {
         if (currentState == mineState || (currentState == markedState && markedState.isHasMine())) {
             setBackground(Utils.getDrawable(getContext(), R.mipmap.mine));

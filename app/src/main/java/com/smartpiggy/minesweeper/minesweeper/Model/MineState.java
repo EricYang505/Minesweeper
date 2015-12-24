@@ -35,7 +35,7 @@ public class MineState implements GridState{
 
     @Override
     public void markMine() {
-        mGrid.markedState.setHasMine(true);
+        mGrid.markedState.setHasMine(true);//set markedState do not have mine
         mGrid.currentState = mGrid.markedState;
         mGrid.setBackground(Utils.getDrawable(mGrid.getContext(), R.mipmap.flag));
     }
