@@ -1,6 +1,4 @@
-package com.smartpiggy.minesweeper.minesweeper.Model;
-
-import android.util.Log;
+package com.smartpiggy.minesweeper.minesweeper.view;
 
 import com.smartpiggy.minesweeper.minesweeper.R;
 
@@ -20,7 +18,7 @@ public class Board {
     //Using mAroundDiffs to get the 8 grids' position around
     private int[][] mAroundDiffs = {{-1, -1},{0, -1},{1, -1},{-1, 0},{1, 0},{-1, 1},{0, 1},{1, 1}};
     private static Board instance;
-    private Grid[][] mGrids;
+    private GridView[][] mGrids;
     private int mSize;
     private int mMineNum;
     private boolean isGameEnd = true;//check game status
@@ -33,12 +31,18 @@ public class Board {
         return instance;
     }
 
+    //clear all the resources
+    public void destroyBoard(){
+        mGrids = null;
+        instance = null;
+    }
+
     public void init(int size, int mineNum){ //reset and init all values
         isGameEnd = false;
         mSize = size;
         mMineNum = mineNum;
         mGrids = null;
-        mGrids = new Grid[size][size];
+        mGrids = new GridView[size][size];
     }
 
     public void setGameEnd(){
@@ -62,13 +66,13 @@ public class Board {
     }
 
     private void plusGridsAround(int x, int y){ //when set a Mine at (x,y), then around grids' number plus one
-        for (Grid grid : getAroundGrids(x, y))
+        for (GridView grid : getAroundGrids(x, y))
             grid.mNum++;
     }
 
     //get all the grids around and return as a grid list
-    public List<Grid> getAroundGrids(int x, int y){
-        List<Grid> list = new ArrayList<>();
+    public List<GridView> getAroundGrids(int x, int y){
+        List<GridView> list = new ArrayList<>();
         for (int[] diff : mAroundDiffs){
             int row = x+diff[0];
             int col = y+diff[1];
@@ -81,29 +85,28 @@ public class Board {
 
     //using BFS(Breadth-first search) to reveal the grids one by one
     public void revealAround(int row, int col){
-        //make sure a grid is revealed more than once
-        //Set store Integer corresponding to row*mSize+col
+        //Set make sure a grid is not revealed more than once, which store index corresponding to row*mSize+col
         Set<Integer> visited = new HashSet<>();
         Queue<Integer> queue = new LinkedList<Integer>();
 
-        for (Grid grid : getAroundGrids(row, col)){
+        for (GridView grid : getAroundGrids(row, col)){
             int index = grid.mRow*mSize + grid.mCol;
             queue.add(index);
             visited.add(index);
         }
         while (!queue.isEmpty()){
             int index = queue.poll();
-            int x = index/mSize, y = index%mSize;
-            Grid grid = mGrids[x][y];//get grid based on index
+            int x = index/mSize, y = index%mSize; //get (x, y) position in the board
+            GridView grid = mGrids[x][y];//get grid based on index
             if (grid.currentState==grid.unRevealState){
                 if (grid.mNum>0) {
                     grid.reveal();//reveal the number of the grid
                 } else{ //mNum equals 0, put the around grids' index to queue
-                    grid.currentState = grid.revealedState;//change grid status
+                    grid.currentState = grid.revealedState;//change grid status to revealed
                     grid.setBackgroundResource(R.drawable.white_grid);//change grid color to white
-                    for (Grid tmpGrid : getAroundGrids(x, y)){
+                    for (GridView tmpGrid : getAroundGrids(x, y)){
                         int tmpIndex = tmpGrid.mRow*mSize + tmpGrid.mCol;
-                        if (visited.contains(tmpIndex)) {//remove duplicate grids
+                        if (visited.contains(tmpIndex)) {//ignore already visited grid
                             continue;
                         }
                         queue.add(tmpIndex);//put around grids to queue
@@ -119,7 +122,7 @@ public class Board {
         }
     }
 
-    public void setGrid(int row, int col, Grid grid){
+    public void setGrid(int row, int col, GridView grid){
         if (row>=0 && row<mSize && col>=0 && col<mSize)
             mGrids[row][col] = grid;
     }

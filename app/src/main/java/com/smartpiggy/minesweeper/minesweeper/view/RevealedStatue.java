@@ -1,17 +1,17 @@
-package com.smartpiggy.minesweeper.minesweeper.Model;
+package com.smartpiggy.minesweeper.minesweeper.view;
 
 import android.widget.Toast;
 
 import com.smartpiggy.minesweeper.minesweeper.R;
-import com.smartpiggy.minesweeper.minesweeper.Utils;
+import com.smartpiggy.minesweeper.minesweeper.Util.Utils;
 
 /**
  * Created by eyang on 12/20/15.
  */
-public class RevealedState implements GridState{
-    private Grid mGrid;
+public class RevealedStatue implements GridStatue {
+    private GridView mGrid;
 
-    public RevealedState(Grid grid){
+    public RevealedStatue(GridView grid){
         this.mGrid = grid;
     }
 
@@ -29,7 +29,7 @@ public class RevealedState implements GridState{
     public void revealTwice() {
         if (mGrid.mNum>0){ //has mines around
             int markCount = 0;
-            for (Grid grid : Board.getInstance().getAroundGrids(mGrid.mRow, mGrid.mCol)){
+            for (GridView grid : Board.getInstance().getAroundGrids(mGrid.mRow, mGrid.mCol)){
                 if (grid.currentState==grid.markedState) {
                     markCount++;
                 }

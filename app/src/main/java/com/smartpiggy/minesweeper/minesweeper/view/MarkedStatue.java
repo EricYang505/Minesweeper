@@ -1,16 +1,15 @@
-package com.smartpiggy.minesweeper.minesweeper.Model;
+package com.smartpiggy.minesweeper.minesweeper.view;
 
 import com.smartpiggy.minesweeper.minesweeper.R;
-import com.smartpiggy.minesweeper.minesweeper.Utils;
 
 /**
  * Created by eyang on 12/20/15.
  */
-public class MarkedState implements GridState{
-    private Grid mGrid;
+public class MarkedStatue implements GridStatue {
+    private GridView mGrid;
     private boolean mHasMine = false;
 
-    public MarkedState(Grid grid){
+    public MarkedStatue(GridView grid){
         this.mGrid = grid;
     }
 
@@ -33,9 +32,9 @@ public class MarkedState implements GridState{
     @Override
     public void markMine() {
         if (mHasMine){
-            mGrid.currentState = mGrid.mineState;
+            mGrid.currentState = mGrid.mineState;//change to mine state
         }else {
-            mGrid.currentState = mGrid.unRevealState;
+            mGrid.currentState = mGrid.unRevealState;//change to unRevealed state
         }
         mGrid.setBackgroundResource(R.drawable.grey_grid);
     }

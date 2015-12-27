@@ -1,9 +1,12 @@
-package com.smartpiggy.minesweeper.minesweeper;
+package com.smartpiggy.minesweeper.minesweeper.Util;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+
+import com.smartpiggy.minesweeper.minesweeper.R;
+
 /**
  * Created by eyang on 12/20/15.
  */

@@ -1,4 +1,4 @@
-package com.smartpiggy.minesweeper.minesweeper.Model;
+package com.smartpiggy.minesweeper.minesweeper.view;
 
 import android.content.Context;
 import android.util.TypedValue;
@@ -6,23 +6,23 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.smartpiggy.minesweeper.minesweeper.R;
-import com.smartpiggy.minesweeper.minesweeper.Utils;
+import com.smartpiggy.minesweeper.minesweeper.Util.Utils;
 
 //Represent each grid in the game board
-public class Grid extends TextView {
+public class GridView extends TextView {
 
     int mRow;
     int mCol;
-    //four different states for a grid
-    MarkedState markedState = new MarkedState(this); //grid has been marked
-    MineState mineState = new MineState(this); //grid has a mine
-    RevealedState revealedState = new RevealedState(this); //grid has been revealed
-    UnRevealState unRevealState = new UnRevealState(this); //grid is not revealed and also do not has a mine
-    GridState currentState; //the current state of the grid
+    //4 different states for a grid
+    MarkedStatue markedState = new MarkedStatue(this); //grid has been marked
+    MineStatue mineState = new MineStatue(this); //grid is not revealed and has a mine
+    RevealedStatue revealedState = new RevealedStatue(this); //grid has been revealed
+    UnRevealStatue unRevealState = new UnRevealStatue(this); //grid is not revealed and also do not has a mine
+    GridStatue currentState; //the current state of the grid
 
     int mNum = 0; //number of mines around
 
-    public Grid(Context context, int row, int col, int viewSize) {
+    public GridView(Context context, int row, int col, int viewSize) {
         super(context);
         mRow = row;
         mCol = col;
@@ -38,7 +38,7 @@ public class Grid extends TextView {
     }
 
     public boolean getIsRevealed(){
-        if (currentState==revealedState) //revealedState are both as revealed
+        if (currentState==revealedState)
             return true;
         return false;
     }
@@ -69,5 +69,4 @@ public class Grid extends TextView {
             setBackground(Utils.getDrawable(getContext(), R.mipmap.mine));
         }
     }
-
 }

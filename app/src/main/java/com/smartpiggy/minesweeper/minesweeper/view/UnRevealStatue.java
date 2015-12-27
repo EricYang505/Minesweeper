@@ -1,15 +1,15 @@
-package com.smartpiggy.minesweeper.minesweeper.Model;
+package com.smartpiggy.minesweeper.minesweeper.view;
 
 import com.smartpiggy.minesweeper.minesweeper.R;
-import com.smartpiggy.minesweeper.minesweeper.Utils;
+import com.smartpiggy.minesweeper.minesweeper.Util.Utils;
 
 /**
  * Created by eyang on 12/20/15.
  */
-public class UnRevealState implements GridState{
-    private Grid mGrid;
+public class UnRevealStatue implements GridStatue {
+    private GridView mGrid;
 
-    public UnRevealState(Grid grid){
+    public UnRevealStatue(GridView grid){
         this.mGrid = grid;
     }
 
