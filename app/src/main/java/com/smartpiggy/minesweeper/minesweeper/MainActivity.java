@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.smartpiggy.minesweeper.minesweeper.view.Board;
 import com.smartpiggy.minesweeper.minesweeper.view.GridView;
 import com.smartpiggy.minesweeper.minesweeper.Util.Utils;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mValidateBtn;
     private Button mNewGameBtn;
     private Button mCheatBtn;
-
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         resetAndInitBoard();
+        initAds();
+    }
+
+    private void initAds(){
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("CAE9ADD7A5C5751A095EB468C8829208")
+                .build();
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
     }
 
     @Override

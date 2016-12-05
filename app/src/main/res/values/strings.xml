@@ -10,6 +10,8 @@
     <string name="game_reveal_fail">Oh sorry, validate fails!</string>
     <string name="game_fail">Oh sorry, you failed the game!</string>
     <string name="mark_more">Please mark all mines around!</string>
+    <string name="banner_ad_unit_id">ca-app-pub-7735762127079903/4572246673</string>
+
     <string-array name="difficulty_level_size">
         <item>8</item>
         <item>12</item>
